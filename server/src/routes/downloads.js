@@ -4,9 +4,9 @@ import { supabase } from '../services/supabase.js';
 export const downloadsRouter = express.Router();
 
 const PRODUCT_FILES = {
-  starter: "starter/Fresher_Job_Starter_Pack.zip",
-  accelerator: "accelerator/Fresher_Job_Accelerator_Pack.zip",
-  launch: "launch/Fresher_Career_Launch_Pack.zip"
+  starter: "starter/Fresher Job Starter Pack.zip",
+  accelerator: "accelerator/Fresher Job Accelerator.zip",
+  launch: "launch/Fresher Career Launch Pack.zip"
 };
 
 // POST /api/download/:productId
@@ -64,7 +64,8 @@ downloadsRouter.post('/:productId', async (req, res) => {
 
     if (urlError || !data?.signedUrl) {
       console.error('DOWNLOAD_SIGNED_URL_FAILED', urlError);
-      return res.status(500).json({ error: 'Failed to generate download link' });
+      const safeMsg = urlError ? urlError.message : "No signed URL returned";
+      return res.status(500).json({ error: `DOWNLOAD_SIGNED_URL_FAILED: ${safeMsg}` });
     }
 
     // 4. Return the signed URL
