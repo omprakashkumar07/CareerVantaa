@@ -16,11 +16,13 @@ downloadsRouter.post('/:productId', async (req, res) => {
     const { accessToken } = req.body;
 
     if (!productId || !accessToken) {
+      console.error('DOWNLOAD_AUTH_TOKEN_MISSING');
       return res.status(400).json({ error: 'Missing parameters' });
     }
 
     const filePath = PRODUCT_FILES[productId];
     if (!filePath) {
+      console.error('DOWNLOAD_PRODUCT_NOT_AUTHORIZED', { productId });
       return res.status(400).json({ error: 'Invalid product' });
     }
 
@@ -32,10 +34,12 @@ downloadsRouter.post('/:productId', async (req, res) => {
       .single();
 
     if (orderError || !order) {
+      console.error('DOWNLOAD_ORDER_NOT_FOUND', { accessToken, orderError });
       return res.status(401).json({ error: 'Invalid access token' });
     }
 
     if (order.status !== 'paid') {
+      console.error('DOWNLOAD_ORDER_NOT_PAID', { status: order.status });
       return res.status(403).json({ error: 'Order not paid' });
     }
 
@@ -48,6 +52,7 @@ downloadsRouter.post('/:productId', async (req, res) => {
       .limit(1);
 
     if (entError || !entitlements || entitlements.length === 0) {
+      console.error('DOWNLOAD_ENTITLEMENT_MISSING', { orderId: order.id, productId, entError });
       return res.status(403).json({ error: 'Not entitled to this product' });
     }
 
@@ -58,7 +63,7 @@ downloadsRouter.post('/:productId', async (req, res) => {
       .createSignedUrl(filePath, 300);
 
     if (urlError || !data?.signedUrl) {
-      console.error("Signed URL error:", urlError);
+      console.error('DOWNLOAD_SIGNED_URL_FAILED', urlError);
       return res.status(500).json({ error: 'Failed to generate download link' });
     }
 

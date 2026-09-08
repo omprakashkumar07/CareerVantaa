@@ -98,7 +98,8 @@ export default function Success() {
         link.click();
         document.body.removeChild(link);
       } else {
-        setErrorMsg("Download access could not be verified. Please refresh the page and try again.");
+        console.error("Backend returned error:", data.error);
+        setErrorMsg(`Download failed: ${data.error || "Unknown error"}. Please refresh and try again.`);
       }
     } catch (err) {
       console.error("Download error", err);
