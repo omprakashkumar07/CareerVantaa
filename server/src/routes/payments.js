@@ -24,23 +24,41 @@ paymentsRouter.post('/create-order', async (req, res) => {
     };
     const rzpOrder = await razorpay.orders.create(options);
 
-    // 2. Generate internal order record
-    const { data: order, error } = await supabase
-      .from('orders')
-      .insert({
-        razorpay_order_id: rzpOrder.id,
-        product_id: productId,
-        product_name: product.name,
-        amount: product.amount,
-        currency: "INR",
-        status: 'created'
-      })
-      .select()
-      .single();
+    // 2. Generate internal order record safely with random access token
+    let order;
+    let attempts = 0;
+    
+    while (attempts < 3) {
+      const accessToken = crypto.randomUUID();
+      const { data, error } = await supabase
+        .from('orders')
+        .insert({
+          razorpay_order_id: rzpOrder.id,
+          product_id: productId,
+          product_name: product.name,
+          amount: product.amount,
+          currency: "INR",
+          status: 'created',
+          access_token: accessToken
+        })
+        .select()
+        .single();
 
-    if (error) {
-      console.error("Supabase insert error:", error);
-      return res.status(500).json({ error: 'Internal server error' });
+      if (error) {
+        if (error.code === '23505') {
+          attempts++;
+          continue;
+        }
+        console.error("Supabase insert error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      
+      order = data;
+      break;
+    }
+
+    if (!order) {
+      return res.status(500).json({ error: 'Failed to create order securely' });
     }
 
     // 3. Return checkout parameters
@@ -93,7 +111,8 @@ paymentsRouter.post('/verify-payment', async (req, res) => {
         verified: true,
         purchasedProduct: order.product_id,
         entitlements: PRODUCTS[order.product_id]?.entitlements || [],
-        accessToken: order.access_token
+        accessToken: order.access_token,
+        amount: order.amount
       });
     }
 
@@ -134,7 +153,8 @@ paymentsRouter.post('/verify-payment', async (req, res) => {
       verified: true,
       purchasedProduct: order.product_id,
       entitlements: productConfig ? productConfig.entitlements : [],
-      accessToken: order.access_token
+      accessToken: order.access_token,
+      amount: order.amount
     });
   } catch (err) {
     console.error("Verify payment error:", err);

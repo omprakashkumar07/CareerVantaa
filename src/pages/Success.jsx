@@ -52,7 +52,7 @@ export default function Success() {
           setAccessToken(data.accessToken);
           setOrderData({
             razorpay_order_id: orderId,
-            amount: searchParams.get('amount') || 0, // Frontend does not have exact amount here, backend does
+            amount: data.amount,
             entitlements: data.entitlements
           });
           setStatus('verified');

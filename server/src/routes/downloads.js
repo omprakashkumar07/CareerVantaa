@@ -40,14 +40,14 @@ downloadsRouter.post('/:productId', async (req, res) => {
     }
 
     // 2. Verify entitlement
-    const { data: entitlement, error: entError } = await supabase
+    const { data: entitlements, error: entError } = await supabase
       .from('entitlements')
       .select('id')
       .eq('order_id', order.id)
       .eq('product_id', productId)
-      .single();
+      .limit(1);
 
-    if (entError || !entitlement) {
+    if (entError || !entitlements || entitlements.length === 0) {
       return res.status(403).json({ error: 'Not entitled to this product' });
     }
 
