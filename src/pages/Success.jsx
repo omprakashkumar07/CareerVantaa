@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, Loader2, Download, AlertCircle } from 'lucide-react';
 import Logo from '../components/Logo/Logo';
-import { EDGE_FUNCTIONS_URL } from '../config';
+import { BACKEND_URL } from '../config';
 
 const PRODUCTS_MAP = {
   starter: "Fresher Job Starter Pack",
@@ -14,8 +14,10 @@ export default function Success() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const paymentId = searchParams.get('razorpay_payment_id');
+  const orderId = searchParams.get('razorpay_order_id');
+  const signature = searchParams.get('razorpay_signature');
   
-  const [status, setStatus] = useState(paymentId ? 'verifying' : 'invalid');
+  const [status, setStatus] = useState(paymentId && orderId && signature ? 'verifying' : 'invalid');
   const [orderData, setOrderData] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   
@@ -29,40 +31,39 @@ export default function Success() {
   }, []);
 
   useEffect(() => {
-    if (!paymentId) return;
+    if (!paymentId || !orderId || !signature) return;
 
     let timeoutId;
     const verifyPayment = async () => {
       try {
-        const res = await fetch(`${EDGE_FUNCTIONS_URL}/verify-payment`, {
+        const res = await fetch(`${BACKEND_URL}/payments/verify-payment`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ razorpay_payment_id: paymentId })
+          body: JSON.stringify({ 
+            razorpay_payment_id: paymentId,
+            razorpay_order_id: orderId,
+            razorpay_signature: signature
+          })
         });
         
         const data = await res.json();
         
-        if (data.status === 'paid') {
-          setAccessToken(data.access_token);
-          setOrderData(data.order);
+        if (res.ok && data.verified) {
+          setAccessToken(data.accessToken);
+          setOrderData({
+            razorpay_order_id: orderId,
+            amount: searchParams.get('amount') || 0, // Frontend does not have exact amount here, backend does
+            entitlements: data.entitlements
+          });
           setStatus('verified');
           return;
         }
 
-        if (data.status === 'pending') {
-          pollCount.current += 1;
-          if (pollCount.current > 10) {
-            setStatus('timeout');
-            return;
-          }
-          timeoutId = setTimeout(verifyPayment, 3000);
-        } else {
-          setStatus('failed');
-        }
+        setStatus('failed');
       } catch (err) {
         console.error("Verification error", err);
         pollCount.current += 1;
-        if (pollCount.current > 10) {
+        if (pollCount.current > 3) {
           setStatus('timeout');
           return;
         }
@@ -73,7 +74,7 @@ export default function Success() {
     verifyPayment();
 
     return () => clearTimeout(timeoutId);
-  }, [paymentId]);
+  }, [paymentId, orderId, signature, searchParams]);
 
   const handleDownload = async (productId) => {
     if (downloading) return;
@@ -81,10 +82,10 @@ export default function Success() {
     setErrorMsg(null);
 
     try {
-      const res = await fetch(`${EDGE_FUNCTIONS_URL}/download-product`, {
+      const res = await fetch(`${BACKEND_URL}/download/${productId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ accessToken, product: productId })
+        body: JSON.stringify({ accessToken })
       });
       
       const data = await res.json();
@@ -101,9 +102,9 @@ export default function Success() {
       }
     } catch (err) {
       console.error("Download error", err);
-      setErrorMsg("Network error while preparing download. Please try again.");
+      setErrorMsg("Failed to initiate download. Please try again.");
     } finally {
-      setDownloading(null);
+      setTimeout(() => setDownloading(null), 2000); // Reset button state after brief delay
     }
   };
 

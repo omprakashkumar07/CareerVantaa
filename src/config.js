@@ -1,7 +1,9 @@
+// Keeping the name PAYMENT_LINKS to avoid unnecessary frontend refactoring,
+// but these now map directly to the backend product IDs.
 export const PAYMENT_LINKS = {
-  starter: "https://rzp.io/rzp/uGJjT3s",
-  accelerator: "https://rzp.io/rzp/8eolAA",
-  launch: "https://rzp.io/rzp/5i0jdJF"
+  starter: "starter",
+  accelerator: "accelerator",
+  launch: "launch"
 };
 
-export const EDGE_FUNCTIONS_URL = import.meta.env.VITE_SUPABASE_FUNCTIONS_URL || 'http://localhost:54321/functions/v1';
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000/api';
