@@ -1,0 +1,125 @@
+import { Check, ArrowRight } from 'lucide-react';
+import { PAYMENT_LINKS } from '../../config';
+import { useCheckout } from '../../context/CheckoutContext';
+import { scrollToSection } from '../../utils/scroll';
+import styles from './Products.module.css';
+
+export default function Products() {
+  const { handleCheckoutClick } = useCheckout();
+
+  return (
+    <section id="products" className={`section ${styles.productsSection}`}>
+      <div className="container">
+        <div className={styles.header}>
+          <div className={styles.eyebrowPill}>CHOOSE YOUR PATH</div>
+          <h2>Invest in Your Career. Start Today.</h2>
+          <p>Pick the pack that matches where you are in your journey.</p>
+        </div>
+
+        <div className={styles.grid}>
+          {/* Starter Pack */}
+          <div id="pricing-starter" className={styles.pricingCard} onClick={(e) => scrollToSection(e, 'pricing-starter')}>
+            <div className={styles.badgeContainer}>
+              <span className="badge badge-blue">START</span>
+            </div>
+            <div className={styles.price}>₹99</div>
+            <h3 className={styles.productName}>Fresher Job Starter Pack</h3>
+            <p className={styles.description}>Build the foundation for a smarter job application.</p>
+
+            <div className={styles.featureList}>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Resume System</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> ATS Resume Templates</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> JD Keyword Analyzer</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Resume-JD Gap Analyzer</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Resume Tailoring System</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Recruiter Outreach Templates</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Job Application Tracker</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Quick Interview Prep</div>
+            </div>
+
+            <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
+              <a
+                href={PAYMENT_LINKS.starter || "#"}
+                onClick={(e) => handleCheckoutClick(e, PAYMENT_LINKS.starter)}
+                className="btn btn-secondary"
+                style={{ width: '100%', justifyContent: 'center' }}
+              >
+                Start With the Foundation — ₹99 <ArrowRight className="btnArrow" size={18} />
+              </a>
+              <span className={styles.smallText}>Start with the essentials</span>
+            </div>
+          </div>
+
+          {/* Accelerator Pack */}
+          <div id="pricing-accelerator" className={`${styles.pricingCard} ${styles.popularCard}`} onClick={(e) => scrollToSection(e, 'pricing-accelerator')}>
+            <div className={styles.badgeContainer}>
+              <span className="badge badge-gold">MOST POPULAR</span>
+            </div>
+            <div className={styles.price}>₹299</div>
+            <h3 className={styles.productName}>Fresher Job Accelerator ⭐</h3>
+            <p className={styles.description}>Turn every relevant job opportunity into a smarter application.</p>
+
+            <div className={styles.featureList}>
+              <div className={styles.groupHighlight}>
+                <div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Everything in Starter Pack, PLUS:
+              </div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Complete Job Application Workflow</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> AI Interview System</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Project Interview System</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> LinkedIn + Naukri Optimization</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Referral System</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> 30-Day Job Hunt System</div>
+            </div>
+
+            <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.smallText} style={{ marginBottom: '0.5rem', color: '#fcd34d', fontWeight: '600', letterSpacing: '0.05em' }}>RECOMMENDED FOR ACTIVE JOB SEEKERS</div>
+              <a
+                href={PAYMENT_LINKS.accelerator || "#"}
+                onClick={(e) => handleCheckoutClick(e, PAYMENT_LINKS.accelerator)}
+                className="btn btn-primary"
+                style={{ width: '100%', justifyContent: 'center', minHeight: '56px', fontSize: '1.1rem' }}
+              >
+                Build My Job Search System — ₹299 <ArrowRight className="btnArrow" size={20} />
+              </a>
+              <span className={styles.smallText} style={{ marginTop: '0.5rem' }}>Everything in Starter + the complete application & job-hunt workflow.</span>
+              <span className={styles.smallText} style={{ marginTop: '0.25rem', opacity: '0.7' }}>Practical systems</span>
+            </div>
+          </div>
+
+          {/* Career Launch Pack */}
+          <div id="pricing-launch" className={`${styles.pricingCard} ${styles.premiumCard}`} onClick={(e) => scrollToSection(e, 'pricing-launch')}>
+            <div className={styles.badgeContainer}>
+              <span className="badge badge-purple">COMPLETE SYSTEM</span>
+            </div>
+            <div className={styles.price}>₹499</div>
+            <h3 className={styles.productName}>Fresher Career Launch Pack 👑</h3>
+            <p className={styles.description}>Prepare, apply and interview with a complete career launch system.</p>
+
+            <div className={styles.featureList}>
+              <div className={styles.groupHighlight}>
+                <div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Everything in Starter + Accelerator, PLUS:
+              </div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Career Role Selection System</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Role-Specific Interview Mastery</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> AI Mock Interview System</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Project Defense & Resume Deep Dive</div>
+              <div className={styles.feature}><div className={styles.iconBox}><Check size={14} className={styles.featureIcon} strokeWidth={3} /></div> Final Interview & Offer System</div>
+            </div>
+
+            <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
+              <a
+                href={PAYMENT_LINKS.launch || "#"}
+                onClick={(e) => handleCheckoutClick(e, PAYMENT_LINKS.launch)}
+                className="btn btn-primary"
+                style={{ width: '100%', justifyContent: 'center', background: '#3b0764', borderColor: '#581c87' }}
+              >
+                Launch My Career System — ₹499 <ArrowRight className="btnArrow" size={18} />
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}

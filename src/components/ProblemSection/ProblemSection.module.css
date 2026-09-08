@@ -1,0 +1,77 @@
+.problemsSection {
+  background: var(--bg-deep);
+}
+
+.header {
+  margin-bottom: 4rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.problemCard {
+  padding: 2rem;
+  background: rgba(13, 20, 36, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.problemCard:hover {
+  transform: translateY(-5px);
+  background: rgba(13, 20, 36, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.cardNumber {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.cardDesc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.transition {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 3rem;
+  background: var(--gradient-accent);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-glow);
+}
+
+@media (max-width: 768px) {
+  .title { font-size: 2rem; }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .problemCard {
+    padding: 1.5rem;
+  }
+  .transition { font-size: 1.25rem; padding: 2rem; }
+}

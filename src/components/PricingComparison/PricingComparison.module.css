@@ -1,0 +1,111 @@
+.comparisonSection {
+  background: var(--bg-deep);
+  position: relative;
+  padding: 8rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.tableWrapper {
+  background: rgba(13, 20, 36, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table th {
+  background: rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.table th:not(:first-child) {
+  text-align: center;
+  width: 20%;
+}
+
+.table td:not(:first-child) {
+  text-align: center;
+}
+
+.highlightCol {
+  background: rgba(59, 130, 246, 0.05);
+  border-left: 1px solid rgba(59, 130, 246, 0.1);
+  border-right: 1px solid rgba(59, 130, 246, 0.1);
+}
+
+.table th.highlightCol {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+}
+
+.checkIcon {
+  color: var(--accent-primary);
+  margin: 0 auto;
+}
+
+.minusIcon {
+  color: var(--text-muted);
+  margin: 0 auto;
+}
+
+/* Mobile Cards */
+.mobileCards {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .tableWrapper {
+    display: none;
+  }
+  .mobileCards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .mobileCard {
+    background: rgba(13, 20, 36, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+  .mobileCardTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .mobileFeature {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+  .mobileFeature:last-child {
+    border-bottom: none;
+  }
+}

@@ -1,0 +1,71 @@
+.rolesSection {
+  background: var(--bg-deep);
+  position: relative;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.roleCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.roleCard:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-5px);
+}
+
+.roleTitle {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.skills {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.skills span {
+  color: var(--accent-primary);
+  margin: 0 0.5rem;
+}
+
+.ctaContainer {
+  text-align: center;
+}
+
+.ctaText {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .roleCard {
+    padding: 1.5rem;
+  }
+}

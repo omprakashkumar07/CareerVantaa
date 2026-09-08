@@ -1,0 +1,222 @@
+.showcaseSection {
+  background: var(--bg-deep);
+  position: relative;
+  padding: 4rem 0 6rem;
+}
+
+.showcaseContainer {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), inset 0 1px 20px rgba(59, 130, 246, 0.05);
+}
+
+.showcaseGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+  margin-bottom: 3rem;
+}
+
+.showcaseItem {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: transparent;
+  border-radius: 1rem;
+}
+
+.itemPopular {
+  background: rgba(30, 27, 75, 0.3);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.popularBadgeFloat {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ca8a04;
+  color: #fef08a;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 10px rgba(202, 138, 4, 0.3);
+  z-index: 10;
+}
+
+.glowBg {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.boxGraphic {
+  flex-shrink: 0;
+  z-index: 2;
+  margin-left: -1rem; /* slight overlap adjustment */
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  flex-grow: 1;
+}
+
+.badgeWrap {
+  margin-bottom: 0.75rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.badgeBlue { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.3); }
+.badgePurple { background: rgba(167, 139, 250, 0.15); color: #ddd6fe; border: 1px solid rgba(167,139,250,0.3); }
+
+.price {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+}
+
+.underline {
+  border-bottom: 1px solid rgba(255,255,255,0.4);
+}
+
+.viewDetailsBtn {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.viewDetailsBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btnPrimary {
+  background: linear-gradient(135deg, var(--accent-primary), #d946ef);
+  border: none;
+  box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
+}
+
+.btnPrimary:hover {
+  background: linear-gradient(135deg, #4f46e5, #c026d3);
+  box-shadow: 0 6px 20px rgba(217, 70, 239, 0.4);
+}
+
+/* Trust footer under boxes */
+.trustFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.trustItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.trustIcon {
+  color: var(--accent-primary);
+  opacity: 0.7;
+}
+
+.divider {
+  color: rgba(255,255,255,0.1);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .showcaseGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .showcaseItem {
+    flex-direction: column;
+    text-align: center;
+  }
+  .boxGraphic { margin-left: 0; margin-bottom: 1rem; }
+  .viewDetailsBtn { align-self: center; }
+}
+
+@media (max-width: 1024px) {
+  .showcaseGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .orderStarter { order: 2; }
+  .orderLaunch { order: 3; }
+  .orderAccelerator { 
+    order: 1; 
+    grid-column: 1 / -1; 
+  }
+}
+
+@media (max-width: 768px) {
+  .showcaseContainer { padding: 1.25rem; }
+  .showcaseGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .boxGraphic { transform: scale(0.9); margin-bottom: 0.5rem; }
+  .trustFooter {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+  }
+  .divider { display: none; }
+}

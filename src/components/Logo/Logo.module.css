@@ -1,0 +1,34 @@
+.logoContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.logoSvg {
+  display: block;
+}
+
+.logoText {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.textWhite {
+  color: #ffffff;
+}
+
+.textBlue {
+  color: var(--accent-primary);
+}
+
+@media (max-width: 768px) {
+  .logoSvg {
+    width: 34px;
+    height: 28px;
+  }
+  .logoText {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,186 @@
+.scene {
+  perspective: 1000px;
+  width: 160px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  animation: floatIdle 6s ease-in-out infinite;
+}
+
+@keyframes floatIdle {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-20deg) rotateX(5deg);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+}
+
+.scene:hover .box {
+  transform: rotateY(-10deg) rotateX(2deg) translateY(-5px);
+}
+
+.faceFront, .faceLeft {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.faceFront {
+  width: 100%;
+  height: 100%;
+  transform: translateZ(15px);
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
+}
+
+.faceLeft {
+  width: 30px;
+  height: 100%;
+  transform: rotateY(-90deg) translateZ(15px);
+  transform-origin: left center;
+  z-index: 1;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* Base Styles per Tier */
+.starter .faceFront {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(59, 130, 246, 0.3);
+}
+.starter .faceLeft {
+  background: linear-gradient(to bottom, #0f172a, #0b1120);
+}
+
+.accelerator .faceFront {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  box-shadow: 0 15px 30px rgba(139, 92, 246, 0.3), inset 0 0 0 1px rgba(139, 92, 246, 0.5);
+}
+.accelerator .faceLeft {
+  background: linear-gradient(to bottom, #1e1b4b, #151336);
+}
+
+.launch .faceFront {
+  background: linear-gradient(135deg, #2e1065 0%, #4c1d95 100%);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(167, 139, 250, 0.4);
+}
+.launch .faceLeft {
+  background: linear-gradient(to bottom, #2e1065, #1e0a42);
+}
+
+/* Glow Overlays */
+.glowOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 60%);
+  mix-blend-mode: overlay;
+}
+
+/* Content Layout inside Box */
+.content {
+  padding: 1rem 0.75rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+}
+
+.topSection {
+  margin-bottom: auto;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.logoIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.logoText {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.middleSection {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.title {
+  font-size: 1.1rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.starter .productIcon { color: #60a5fa; filter: drop-shadow(0 0 10px rgba(96,165,250,0.5)); }
+.accelerator .productIcon { color: #facc15; filter: drop-shadow(0 0 15px rgba(250,204,21,0.6)); }
+.launch .productIcon { color: #c4b5fd; filter: drop-shadow(0 0 10px rgba(196,181,253,0.5)); }
+
+
+.bottomSection {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.decorativeLines {
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 0.25rem;
+}
+
+.line {
+  height: 2px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 1px;
+  width: 100%;
+}
+
+/* Spine Content */
+.spineContent {
+  width: 200px; /* match height */
+  height: 30px; /* match width */
+  transform: rotate(90deg) translateY(-30px);
+  transform-origin: top left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spineText {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
