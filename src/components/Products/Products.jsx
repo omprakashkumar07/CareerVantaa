@@ -2,10 +2,16 @@ import { Check, ArrowRight } from 'lucide-react';
 import { PAYMENT_LINKS } from '../../config';
 import { useCheckout } from '../../context/CheckoutContext';
 import { scrollToSection } from '../../utils/scroll';
+import { trackViewProducts } from '../../utils/analytics';
+import { useEffect } from 'react';
 import styles from './Products.module.css';
 
 export default function Products() {
   const { handleCheckoutClick } = useCheckout();
+
+  useEffect(() => {
+    trackViewProducts();
+  }, []);
 
   return (
     <section id="products" className={`section ${styles.productsSection}`}>

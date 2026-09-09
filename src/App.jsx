@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import ProblemSection from './components/ProblemSection/ProblemSection';
@@ -24,6 +25,7 @@ import Terms from './pages/Terms';
 import Refund from './pages/Refund';
 import Contact from './pages/Contact';
 import ScrollToTop from './components/ScrollToTop';
+import { trackPageView } from './utils/analytics';
 
 const Home = () => (
   <>
@@ -48,6 +50,12 @@ const Home = () => (
 );
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location]);
+
   return (
     <CheckoutProvider>
       <ScrollToTop />

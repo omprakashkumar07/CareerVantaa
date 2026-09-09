@@ -8,7 +8,7 @@ export default function Terms() {
       <main style={{ paddingTop: '120px', paddingBottom: '80px', minHeight: '80vh' }}>
         <div className="container" style={{ maxWidth: '800px' }}>
           <h1 style={{ marginBottom: '2rem' }}>Terms & Conditions</h1>
-          <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Last updated: 08 Aug 2026</p>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Last updated: 09 Sep 2026</p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', lineHeight: '1.7' }}>
             <section>

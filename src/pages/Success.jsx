@@ -3,12 +3,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle2, Loader2, Download, AlertCircle } from 'lucide-react';
 import Logo from '../components/Logo/Logo';
 import { BACKEND_URL } from '../config';
+import { PRODUCTS } from '../utils/products';
+import { trackPurchase } from '../utils/analytics';
 
-const PRODUCTS_MAP = {
-  starter: "Fresher Job Starter Pack",
-  accelerator: "Fresher Job Accelerator",
-  launch: "Fresher Career Launch Pack"
-};
+// PRODUCTS_MAP is replaced by PRODUCTS from utils/products
 
 export default function Success() {
   const navigate = useNavigate();
@@ -25,6 +23,7 @@ export default function Success() {
   const [errorMsg, setErrorMsg] = useState(null);
   
   const pollCount = useRef(0);
+  const purchaseTracked = useRef(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,6 +54,17 @@ export default function Success() {
             amount: data.amount,
             entitlements: data.entitlements
           });
+          if (!purchaseTracked.current) {
+            purchaseTracked.current = true;
+            // Track purchase for each product in the order (usually 1)
+            data.entitlements.forEach(productId => {
+              const product = PRODUCTS[productId];
+              if (product) {
+                trackPurchase(orderId, product);
+              }
+            });
+          }
+
           setStatus('verified');
           return;
         }
@@ -199,7 +209,7 @@ export default function Success() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
                 {orderData.entitlements.map(product => (
                   <div key={product} style={{ background: 'var(--bg-deep)', padding: '1rem', borderRadius: '0.5rem', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <div style={{ fontWeight: '500' }}>{PRODUCTS_MAP[product]}</div>
+                    <div style={{ fontWeight: '500' }}>{PRODUCTS[product]?.name || product}</div>
                     <button 
                       onClick={() => handleDownload(product)}
                       disabled={downloading === product}

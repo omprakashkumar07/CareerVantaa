@@ -1,7 +1,11 @@
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 const META_PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID;
 
+let isInitialized = false;
+
 export const initAnalytics = () => {
+  if (isInitialized) return;
+  isInitialized = true;
   // Initialize GA4 if ID exists
   if (GA_MEASUREMENT_ID) {
     const script = document.createElement('script');
@@ -12,7 +16,9 @@ export const initAnalytics = () => {
     window.dataLayer = window.dataLayer || [];
     window.gtag = function gtag(){ window.dataLayer.push(arguments); };
     window.gtag('js', new Date());
-    window.gtag('config', GA_MEASUREMENT_ID);
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      send_page_view: false
+    });
   } else {
     console.log("GA4 is disabled (VITE_GA_MEASUREMENT_ID not set)");
   }

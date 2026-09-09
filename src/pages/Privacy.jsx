@@ -8,12 +8,12 @@ export default function Privacy() {
       <main style={{ paddingTop: '120px', paddingBottom: '80px', minHeight: '80vh' }}>
         <div className="container" style={{ maxWidth: '800px' }}>
           <h1 style={{ marginBottom: '2rem' }}>Privacy Policy</h1>
-          <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Last updated: 08 Aug 2026</p>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>Last updated: 09 Sep 2026</p>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', lineHeight: '1.7' }}>
             <section>
               <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>1. Information We Collect</h2>
-              <p>We only collect the information necessary to process your payment and deliver our digital products. This includes your name, email address, and phone number provided during checkout. Payment details are processed securely by our payment provider (Razorpay) and are not stored on our servers.</p>
+              <p>We only collect the information necessary to process your payment and deliver our digital products. This includes your name, email address, and phone number provided during checkout. Payment details are processed securely by our payment provider (Razorpay) and are not stored on our servers. Additionally, if enabled, we use analytics and advertising technologies (such as Google Analytics and Meta Pixel) to improve our website and measure the effectiveness of our campaigns.</p>
             </section>
 
             <section>

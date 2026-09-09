@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from 'react';
 import styles from './CheckoutToast.module.css';
 import { Info, X, Loader2 } from 'lucide-react';
 import { BACKEND_URL } from '../config';
+import { PRODUCTS } from '../utils/products';
+import { trackBeginCheckout, trackViewItem } from '../utils/analytics';
 
 const CheckoutContext = createContext();
 
@@ -34,6 +36,12 @@ export function CheckoutProvider({ children }) {
   const handleCheckoutClick = async (e, productId) => {
     e.preventDefault();
     if (!productId || productId.startsWith('#')) return;
+
+    const product = PRODUCTS[productId];
+    if (product) {
+      trackViewItem(product);
+      trackBeginCheckout(product);
+    }
 
     setIsLoading(true);
     
