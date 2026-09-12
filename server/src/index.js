@@ -8,6 +8,11 @@ import { downloadsRouter } from './routes/downloads.js';
 
 const app = express();
 
+// Health check endpoints for UptimeRobot/Render (placed before CORS/Helmet)
+app.get(['/', '/health'], (req, res) => {
+  res.status(200).send('OK');
+});
+
 // Security middlewares
 app.use(helmet());
 
@@ -39,11 +44,6 @@ app.use(express.json());
 // Routes
 app.use('/api/payments', paymentsRouter);
 app.use('/api/download', downloadsRouter);
-
-// Health check endpoint for Render
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
-});
 
 // Start the server
 app.listen(config.port, '0.0.0.0', () => {
