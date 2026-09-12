@@ -3,7 +3,7 @@ import { supabase } from '../services/supabase.js';
 
 export const downloadsRouter = express.Router();
 
-const PRODUCT_FILES = {
+export const PRODUCT_FILES = {
   starter: "starter/Fresher Job Starter Pack.zip",
   accelerator: "accelerator/Fresher Job Accelerator.zip",
   launch: "launch/Fresher Career Launch Pack.zip"
