@@ -21,21 +21,21 @@ export default function Navbar() {
     scrollToSection(e, targetId);
   };
 
-  const handleCTAClick = (e) => {
+  const handleCTAClick = (e, targetId) => {
     setIsMobileMenuOpen(false);
-    scrollToSection(e, 'pricing-starter');
+    scrollToSection(e, targetId);
     
-    // Visually focus/highlight the starter pack
+    // Visually focus/highlight the target card
     setTimeout(() => {
-      const starterCard = document.getElementById('pricing-starter');
-      if (starterCard) {
-        starterCard.style.transition = 'all 0.3s ease';
-        starterCard.style.boxShadow = '0 0 30px rgba(59, 130, 246, 0.5)';
-        starterCard.style.borderColor = 'rgba(59, 130, 246, 0.8)';
+      const targetCard = document.getElementById(targetId);
+      if (targetCard) {
+        targetCard.style.transition = 'all 0.3s ease';
+        targetCard.style.boxShadow = '0 0 30px rgba(59, 130, 246, 0.5)';
+        targetCard.style.borderColor = 'rgba(59, 130, 246, 0.8)';
         
         setTimeout(() => {
-          starterCard.style.boxShadow = '';
-          starterCard.style.borderColor = '';
+          targetCard.style.boxShadow = '';
+          targetCard.style.borderColor = '';
         }, 1500);
       }
     }, 500); // Wait for scroll
@@ -53,25 +53,43 @@ export default function Navbar() {
           <a href="#how-it-works" onClick={(e) => handleNavClick(e, 'how-it-works')}>How It Works</a>
           <a href="#faq" onClick={(e) => handleNavClick(e, 'faq')}>FAQ</a>
           
-          {/* Mobile CTA inside menu */}
+          {/* Mobile CTAs inside menu */}
           <a 
-            href="#pricing-starter" 
-            onClick={handleCTAClick}
+            href="#pricing-accelerator" 
+            onClick={(e) => handleCTAClick(e, 'pricing-accelerator')}
             className={`btn btn-primary ${styles.mobileCta}`}
             style={{ borderRadius: '999px' }}
           >
-            <span className={styles.greenDot}></span> Start With ₹99 <ArrowRight className="btnArrow" size={16} />
+            <span className={styles.greenDot}></span> Offer 60% OFF <ArrowRight className="btnArrow" size={16} />
+          </a>
+          <a 
+            href="#pricing-launch" 
+            onClick={(e) => handleCTAClick(e, 'pricing-launch')}
+            className={`btn btn-primary ${styles.mobileCta}`}
+            style={{ borderRadius: '999px', marginTop: '10px' }}
+          >
+            <span className={styles.greenDot}></span> Offer 70% OFF <ArrowRight className="btnArrow" size={16} />
           </a>
         </div>
 
-        <a 
-          href="#pricing-starter" 
-          onClick={handleCTAClick}
-          className={`btn btn-primary ${styles.desktopCta}`}
-          style={{ padding: '0.6rem 1.2rem', minHeight: 'auto', borderRadius: '999px', fontSize: '0.9rem' }}
-        >
-          <span className={styles.greenDot}></span> Start With ₹99 <ArrowRight className="btnArrow" size={16} />
-        </a>
+        <div className={styles.desktopCta} style={{ display: 'flex', gap: '10px' }}>
+          <a 
+            href="#pricing-accelerator" 
+            onClick={(e) => handleCTAClick(e, 'pricing-accelerator')}
+            className="btn btn-primary"
+            style={{ padding: '0.6rem 1.2rem', minHeight: 'auto', borderRadius: '999px', fontSize: '0.9rem' }}
+          >
+            <span className={styles.greenDot}></span> Offer 60% OFF <ArrowRight className="btnArrow" size={16} />
+          </a>
+          <a 
+            href="#pricing-launch" 
+            onClick={(e) => handleCTAClick(e, 'pricing-launch')}
+            className="btn btn-primary"
+            style={{ padding: '0.6rem 1.2rem', minHeight: 'auto', borderRadius: '999px', fontSize: '0.9rem' }}
+          >
+            <span className={styles.greenDot}></span> Offer 70% OFF <ArrowRight className="btnArrow" size={16} />
+          </a>
+        </div>
 
         <button 
           className={styles.menuBtn}

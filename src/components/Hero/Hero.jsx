@@ -16,6 +16,38 @@ export default function Hero() {
 
   return (
     <section className={styles.heroSection}>
+      <div className={styles.topMarqueeContainer}>
+        <div className={styles.topMarqueeContent}>
+          <span>⚡ Limited-Time Offers <span className={styles.dot}>•</span> Save 50% on Starter Pack</span>
+          <span className={styles.dot}>•</span>
+          <span>🚀 Save 60% on Fresher Job Accelerator</span>
+          <span className={styles.dot}>•</span>
+          <span>🎯 Save 70% on Fresher Career Launch Pack</span>
+          <span className={styles.dot}>•</span>
+          <span>💼 Built for BTech • BCA • MCA • CS/IT Freshers</span>
+          <span className={styles.dot}>•</span>
+          <span>📄 Resume • JD Analysis • Applications • Interviews</span>
+          <span className={styles.dot}>•</span>
+          <span>🔥 Practical Career Systems for Freshers</span>
+          <span className={styles.dot}>•</span>
+          <span>⏳ Limited-Time Career Offers Available</span>
+          <span className={styles.dot}>•</span>
+          
+          <span aria-hidden="true">⚡ Limited-Time Offers <span className={styles.dot}>•</span> Save 50% on Starter Pack</span>
+          <span aria-hidden="true" className={styles.dot}>•</span>
+          <span aria-hidden="true">🚀 Save 60% on Fresher Job Accelerator</span>
+          <span aria-hidden="true" className={styles.dot}>•</span>
+          <span aria-hidden="true">🎯 Save 70% on Fresher Career Launch Pack</span>
+          <span aria-hidden="true" className={styles.dot}>•</span>
+          <span aria-hidden="true">💼 Built for BTech • BCA • MCA • CS/IT Freshers</span>
+          <span aria-hidden="true" className={styles.dot}>•</span>
+          <span aria-hidden="true">📄 Resume • JD Analysis • Applications • Interviews</span>
+          <span aria-hidden="true" className={styles.dot}>•</span>
+          <span aria-hidden="true">🔥 Practical Career Systems for Freshers</span>
+          <span aria-hidden="true" className={styles.dot}>•</span>
+          <span aria-hidden="true">⏳ Limited-Time Career Offers Available</span>
+        </div>
+      </div>
       <div className={`container ${styles.heroContainer}`}>
         <div className={`${styles.content} animate-fade-in`}>
           <div className={styles.eyebrow}>
@@ -29,7 +61,7 @@ export default function Hero() {
             <span className="text-gradient">Career System.</span>
           </h1>
           <p className={styles.subtitle}>
-            Practical tools and AI-powered systems for CS/IT freshers — from role selection and resume improvement to interviews and offers.
+            Practical tools and powerfull systems for Engineering Students/B.tech/M.tech/BCA/MCA freshers — from role selection and resume improvement to interviews and offers.
           </p>
           <div className={styles.actions}>
             <a href="#products" onClick={(e) => scrollToSection(e, 'products')} className="btn btn-primary" style={{ borderRadius: '999px' }}>
@@ -40,7 +72,7 @@ export default function Hero() {
             </a>
           </div>
           <p className={styles.disclaimer}>
-            No job guarantees. Just practical systems you can actually use.
+            99% job guarantees. Just practical systems you can actually use.
           </p>
         </div>
 
@@ -48,13 +80,13 @@ export default function Hero() {
           <div className={styles.systemUI}>
             {/* Floating UI Elements */}
             <div className={`${styles.floatingBadge} ${styles.badgeTop}`}>
-              <CheckCircle2 size={14} color="var(--accent-secondary)" /> Role Fit: 86%
+              <CheckCircle2 size={14} color="var(--accent-secondary)" /> Role Fit: 57%
             </div>
             <div className={`${styles.floatingBadge} ${styles.badgeMid}`}>
               <Zap size={14} color="var(--accent-primary)" /> JD Match Detected
             </div>
             <div className={`${styles.floatingBadge} ${styles.badgeBottom}`}>
-              <FileText size={14} color="#a855f7" /> Skill Gap: 3
+              <FileText size={14} color="#a855f7" /> Skill Gap: 43%
             </div>
 
             <div className={styles.nodes}>

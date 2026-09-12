@@ -9,10 +9,24 @@ import styles from './Products.module.css';
 export default function Products() {
   const { handleCheckoutClick, loadingProductId, loadingText } = useCheckout();
   const [expandedId, setExpandedId] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(7 * 60);
 
   useEffect(() => {
     trackViewProducts();
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
 
   const getCardClass = (baseClass, cardId) => {
     if (!expandedId) return baseClass;
@@ -29,13 +43,56 @@ export default function Products() {
           <p>Pick the pack that matches where you are in your journey.</p>
         </div>
 
+        <div className={styles.marqueeContainer}>
+          <div className={styles.marqueeContent}>
+            <span>CareerVantaa • Built for CS/IT Freshers</span>
+            <span className={styles.dot}>◆</span>
+            <span>Save 50% on Fresher Job Starter Pack</span>
+            <span className={styles.dot}>◆</span>
+            <span>Save 60% on Fresher Job Accelerator</span>
+            <span className={styles.dot}>◆</span>
+            <span>Save 70% on Fresher Career Launch Pack</span>
+            <span className={styles.dot}>◆</span>
+            <span>Practical Career Systems for Indian Freshers</span>
+            <span className={styles.dot}>◆</span>
+            <span>Resume • Applications • Interviews • Job Hunt</span>
+            <span className={styles.dot}>◆</span>
+            <span>Limited-Time Career Offers</span>
+            <span className={styles.dot}>◆</span>
+            <span>Start Smarter. Apply Better. Get Interview-Ready.</span>
+            <span className={styles.dot}>◆</span>
+            
+            {/* Duplicate for infinite scroll */}
+            <span aria-hidden="true">CareerVantaa • Built for CS/IT Freshers</span>
+            <span aria-hidden="true" className={styles.dot}>◆</span>
+            <span aria-hidden="true">Save 50% on Fresher Job Starter Pack</span>
+            <span aria-hidden="true" className={styles.dot}>◆</span>
+            <span aria-hidden="true">Save 60% on Fresher Job Accelerator</span>
+            <span aria-hidden="true" className={styles.dot}>◆</span>
+            <span aria-hidden="true">Save 70% on Fresher Career Launch Pack</span>
+            <span aria-hidden="true" className={styles.dot}>◆</span>
+            <span aria-hidden="true">Practical Career Systems for Indian Freshers</span>
+            <span aria-hidden="true" className={styles.dot}>◆</span>
+            <span aria-hidden="true">Resume • Applications • Interviews • Job Hunt</span>
+            <span aria-hidden="true" className={styles.dot}>◆</span>
+            <span aria-hidden="true">Limited-Time Career Offers</span>
+            <span aria-hidden="true" className={styles.dot}>◆</span>
+            <span aria-hidden="true">Start Smarter. Apply Better. Get Interview-Ready.</span>
+          </div>
+        </div>
+
         <div className={styles.grid}>
           {/* Starter Pack */}
           <div id="pricing-starter" className={getCardClass(styles.pricingCard, 'starter')} onClick={(e) => { scrollToSection(e, 'pricing-starter'); setExpandedId(expandedId === 'starter' ? null : 'starter'); }}>
             <div className={styles.badgeContainer}>
               <span className="badge badge-blue">START</span>
             </div>
+            <div className={styles.priceContainer}>
+              <span className={styles.originalPrice}>₹199</span>
+              <span className={styles.discountBadge}>50% OFF</span>
+            </div>
             <div className={styles.price}>₹99</div>
+            <div className={styles.savingsText}>Save ₹100</div>
             <h3 className={styles.productName}>Fresher Job Starter Pack</h3>
             <p className={styles.description}>Build the foundation for a smarter job application.</p>
 
@@ -51,6 +108,16 @@ export default function Products() {
             </div>
 
             <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.cardTimerContainer}>
+                <div className={styles.cardTimerHeader}>
+                  <div className={styles.cardTimerLabel}>
+                    <span style={{ fontSize: '1rem' }}>⏳</span> LIMITED-TIME OFFER
+                  </div>
+                  <div className={styles.cardTimerTag}>ONLY A FEW LEFT</div>
+                </div>
+                <div className={styles.cardTimerValue}>{formatTime(timeLeft)}</div>
+                <div className={styles.cardTimerSubtext}>Claim your offer before the offer ends.</div>
+              </div>
               <a
                 href={PAYMENT_LINKS.starter || "#"}
                 onClick={(e) => {
@@ -63,7 +130,7 @@ export default function Products() {
                 {loadingProductId === PAYMENT_LINKS.starter ? (
                   <><Loader2 className="animate-spin" size={18} style={{marginRight: '8px'}} /> {loadingText}</>
                 ) : (
-                  <>Start With the Foundation — ₹99 <ArrowRight className="btnArrow" size={18} /></>
+                  <>Grab Offer — 50% OFF <ArrowRight className="btnArrow" size={18} /></>
                 )}
               </a>
               <span className={styles.smallText}>Start with the essentials</span>
@@ -75,7 +142,12 @@ export default function Products() {
             <div className={styles.badgeContainer}>
               <span className="badge badge-gold">MOST POPULAR</span>
             </div>
+            <div className={styles.priceContainer}>
+              <span className={styles.originalPrice}>₹749</span>
+              <span className={styles.discountBadge}>60% OFF</span>
+            </div>
             <div className={styles.price}>₹299</div>
+            <div className={styles.savingsText}>Save ₹450</div>
             <h3 className={styles.productName}>Fresher Job Accelerator ⭐</h3>
             <p className={styles.description}>Turn every relevant job opportunity into a smarter application.</p>
 
@@ -93,6 +165,16 @@ export default function Products() {
 
             <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
               <div className={styles.smallText} style={{ marginBottom: '0.5rem', color: '#fcd34d', fontWeight: '600', letterSpacing: '0.05em' }}>RECOMMENDED FOR ACTIVE JOB SEEKERS</div>
+              <div className={styles.cardTimerContainer}>
+                <div className={styles.cardTimerHeader}>
+                  <div className={styles.cardTimerLabel}>
+                    <span style={{ fontSize: '1rem' }}>⏳</span> LIMITED-TIME OFFER
+                  </div>
+                  <div className={styles.cardTimerTag}>ONLY A FEW LEFT</div>
+                </div>
+                <div className={styles.cardTimerValue}>{formatTime(timeLeft)}</div>
+                <div className={styles.cardTimerSubtext}>Claim your offer before the offer ends.</div>
+              </div>
               <a
                 href={PAYMENT_LINKS.accelerator || "#"}
                 onClick={(e) => {
@@ -105,7 +187,7 @@ export default function Products() {
                 {loadingProductId === PAYMENT_LINKS.accelerator ? (
                   <><Loader2 className="animate-spin" size={20} style={{marginRight: '8px'}} /> {loadingText}</>
                 ) : (
-                  <>Build My Job Search System — ₹299 <ArrowRight className="btnArrow" size={20} /></>
+                  <>Grab Offer — 60% OFF <ArrowRight className="btnArrow" size={20} /></>
                 )}
               </a>
               <span className={styles.smallText} style={{ marginTop: '0.5rem' }}>Everything in Starter + the complete application & job-hunt workflow.</span>
@@ -118,7 +200,12 @@ export default function Products() {
             <div className={styles.badgeContainer}>
               <span className="badge badge-purple">COMPLETE SYSTEM</span>
             </div>
+            <div className={styles.priceContainer}>
+              <span className={styles.originalPrice}>₹1669</span>
+              <span className={styles.discountBadge}>70% OFF</span>
+            </div>
             <div className={styles.price}>₹499</div>
+            <div className={styles.savingsText}>Save ₹1,170</div>
             <h3 className={styles.productName}>Fresher Career Launch Pack 👑</h3>
             <p className={styles.description}>Prepare, apply and interview with a complete career launch system.</p>
 
@@ -134,6 +221,16 @@ export default function Products() {
             </div>
 
             <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.cardTimerContainer}>
+                <div className={styles.cardTimerHeader}>
+                  <div className={styles.cardTimerLabel}>
+                    <span style={{ fontSize: '1rem' }}>⏳</span> LIMITED-TIME OFFER
+                  </div>
+                  <div className={styles.cardTimerTag}>ONLY A FEW LEFT</div>
+                </div>
+                <div className={styles.cardTimerValue}>{formatTime(timeLeft)}</div>
+                <div className={styles.cardTimerSubtext}>Claim your offer before the offer ends.</div>
+              </div>
               <a
                 href={PAYMENT_LINKS.launch || "#"}
                 onClick={(e) => {
@@ -146,7 +243,7 @@ export default function Products() {
                 {loadingProductId === PAYMENT_LINKS.launch ? (
                   <><Loader2 className="animate-spin" size={18} style={{marginRight: '8px'}} /> {loadingText}</>
                 ) : (
-                  <>Launch My Career System — ₹499 <ArrowRight className="btnArrow" size={18} /></>
+                  <>Grab Offer — 70% OFF <ArrowRight className="btnArrow" size={18} /></>
                 )}
               </a>
             </div>

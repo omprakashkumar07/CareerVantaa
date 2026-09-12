@@ -74,4 +74,70 @@
     padding: 1.5rem;
   }
   .transition { font-size: 1.25rem; padding: 2rem; }
+  
+  .problemMarqueeContent {
+    font-size: 0.75rem;
+    gap: 1.5rem;
+  }
+  @keyframes scrollProblemText {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 0.75rem)); }
+  }
+}
+
+/* Problem Marquee Styles */
+.problemMarqueeContainer {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(13, 20, 36, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 0.6rem 0;
+  margin-bottom: 2.5rem;
+  display: flex;
+  white-space: nowrap;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.problemMarqueeContainer::before,
+.problemMarqueeContainer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  z-index: 2;
+}
+
+.problemMarqueeContainer::before {
+  left: 0;
+  background: linear-gradient(to right, #050a15, transparent);
+}
+
+.problemMarqueeContainer::after {
+  right: 0;
+  background: linear-gradient(to left, #050a15, transparent);
+}
+
+.problemMarqueeContent {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  animation: scrollProblemText 45s linear infinite;
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.problemMarqueeContent .dot {
+  color: #a855f7;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+@keyframes scrollProblemText {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 1rem)); }
 }

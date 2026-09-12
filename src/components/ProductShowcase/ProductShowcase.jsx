@@ -29,14 +29,14 @@ export default function ProductShowcase() {
                 <div className={styles.badgeWrap}>
                   <span className={`${styles.badge} ${styles.badgeBlue}`}>START</span>
                 </div>
-                <div className={styles.price}>₹99</div>
+                <div className={styles.price}>50% OFF</div>
                 <h3 className={styles.title}>Fresher Job<br/>Starter Pack</h3>
                 <p className={styles.subtitle}>Build the foundation for a smarter job application.</p>
                 <button 
                   className={styles.viewDetailsBtn}
                   onClick={() => scrollToPricing('pricing-starter')}
                 >
-                  View Details ↓
+                  Claim Offer →
                 </button>
               </div>
             </div>
@@ -53,14 +53,14 @@ export default function ProductShowcase() {
                 <div className={styles.badgeWrap} style={{visibility: 'hidden'}}>
                   <span className={styles.badge}>SPACE</span>
                 </div>
-                <div className={styles.price}>₹299</div>
+                <div className={styles.price}>60% OFF</div>
                 <h3 className={styles.title}>Fresher Job<br/>Accelerator <span className={styles.star}>⭐</span></h3>
                 <p className={styles.subtitle}>Turn every relevant <span className={styles.underline}>job opportunity into</span> a smarter application.</p>
                 <button 
                   className={`${styles.viewDetailsBtn} ${styles.btnPrimary}`}
                   onClick={() => scrollToPricing('pricing-accelerator')}
                 >
-                  View Details ↓
+                  Claim Offer →
                 </button>
               </div>
             </div>
@@ -74,14 +74,14 @@ export default function ProductShowcase() {
                 <div className={styles.badgeWrap}>
                   <span className={`${styles.badge} ${styles.badgePurple}`}>COMPLETE SYSTEM</span>
                 </div>
-                <div className={styles.price}>₹499</div>
+                <div className={styles.price}>70% OFF</div>
                 <h3 className={styles.title}>Fresher Career<br/>Launch Pack <span className={styles.crown}>👑</span></h3>
                 <p className={styles.subtitle}>Your complete career launch system from role selection to offer.</p>
                 <button 
                   className={styles.viewDetailsBtn}
                   onClick={() => scrollToPricing('pricing-launch')}
                 >
-                  View Details ↓
+                  Claim Offer →
                 </button>
               </div>
             </div>

@@ -32,6 +32,44 @@ export default function ProblemSection() {
   return (
     <section className={`section ${styles.problemsSection}`}>
       <div className="container">
+        <div className={styles.problemMarqueeContainer}>
+          <div className={styles.problemMarqueeContent}>
+            <span>CareerVantaa • Practical Career Systems for Freshers</span>
+            <span className={styles.dot}>•</span>
+            <span>Resume • JD Analysis • Applications • Interviews</span>
+            <span className={styles.dot}>•</span>
+            <span>Built for BTech • BCA • MCA • CS/IT Freshers</span>
+            <span className={styles.dot}>•</span>
+            <span>Save 50% on Starter Pack</span>
+            <span className={styles.dot}>•</span>
+            <span>Save 60% on Job Accelerator</span>
+            <span className={styles.dot}>•</span>
+            <span>Save 70% on Career Launch Pack</span>
+            <span className={styles.dot}>•</span>
+            <span>Stop Applying Randomly • Start Following a Career System</span>
+            <span className={styles.dot}>•</span>
+            <span>Practical Tools. Smarter Applications. Better Preparation.</span>
+            <span className={styles.dot}>•</span>
+            
+            {/* Duplicate for infinite scroll */}
+            <span aria-hidden="true">CareerVantaa • Practical Career Systems for Freshers</span>
+            <span aria-hidden="true" className={styles.dot}>•</span>
+            <span aria-hidden="true">Resume • JD Analysis • Applications • Interviews</span>
+            <span aria-hidden="true" className={styles.dot}>•</span>
+            <span aria-hidden="true">Built for BTech • BCA • MCA • CS/IT Freshers</span>
+            <span aria-hidden="true" className={styles.dot}>•</span>
+            <span aria-hidden="true">Save 50% on Starter Pack</span>
+            <span aria-hidden="true" className={styles.dot}>•</span>
+            <span aria-hidden="true">Save 60% on Job Accelerator</span>
+            <span aria-hidden="true" className={styles.dot}>•</span>
+            <span aria-hidden="true">Save 70% on Career Launch Pack</span>
+            <span aria-hidden="true" className={styles.dot}>•</span>
+            <span aria-hidden="true">Stop Applying Randomly • Start Following a Career System</span>
+            <span aria-hidden="true" className={styles.dot}>•</span>
+            <span aria-hidden="true">Practical Tools. Smarter Applications. Better Preparation.</span>
+          </div>
+        </div>
+
         <div className={`text-center ${styles.header}`}>
           <h2 className={styles.title}>
             Most Freshers Don't Have an Effort Problem.<br />

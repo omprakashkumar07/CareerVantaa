@@ -71,6 +71,10 @@
   justify-self: end;
 }
 
+.mobileCta {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .navLinks {
     display: flex;
