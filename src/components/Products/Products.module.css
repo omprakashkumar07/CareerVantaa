@@ -205,6 +205,33 @@
   margin-top: 1rem;
 }
 
+/* Interactive State Classes */
+.pricingCard.expanded {
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+.popularCard.expanded {
+  border-color: #c4b5fd;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 70px rgba(139, 92, 246, 0.5);
+}
+
+.premiumCard.expanded {
+  border-color: rgba(167, 139, 250, 0.9);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(139, 92, 246, 0.4);
+}
+
+.pricingCard.dimmed {
+  opacity: 0.4;
+  transform: scale(0.95);
+  filter: grayscale(40%);
+}
+
+.popularCard.dimmed {
+  transform: scale(0.95);
+}
+
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);

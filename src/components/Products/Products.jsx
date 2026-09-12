@@ -3,15 +3,22 @@ import { PAYMENT_LINKS } from '../../config';
 import { useCheckout } from '../../context/CheckoutContext';
 import { scrollToSection } from '../../utils/scroll';
 import { trackViewProducts } from '../../utils/analytics';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Products.module.css';
 
 export default function Products() {
   const { handleCheckoutClick } = useCheckout();
+  const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
     trackViewProducts();
   }, []);
+
+  const getCardClass = (baseClass, cardId) => {
+    if (!expandedId) return baseClass;
+    if (expandedId === cardId) return `${baseClass} ${styles.expanded}`;
+    return `${baseClass} ${styles.dimmed}`;
+  };
 
   return (
     <section id="products" className={`section ${styles.productsSection}`}>
@@ -24,7 +31,7 @@ export default function Products() {
 
         <div className={styles.grid}>
           {/* Starter Pack */}
-          <div id="pricing-starter" className={styles.pricingCard} onClick={(e) => scrollToSection(e, 'pricing-starter')}>
+          <div id="pricing-starter" className={getCardClass(styles.pricingCard, 'starter')} onClick={(e) => { scrollToSection(e, 'pricing-starter'); setExpandedId(expandedId === 'starter' ? null : 'starter'); }}>
             <div className={styles.badgeContainer}>
               <span className="badge badge-blue">START</span>
             </div>
@@ -57,7 +64,7 @@ export default function Products() {
           </div>
 
           {/* Accelerator Pack */}
-          <div id="pricing-accelerator" className={`${styles.pricingCard} ${styles.popularCard}`} onClick={(e) => scrollToSection(e, 'pricing-accelerator')}>
+          <div id="pricing-accelerator" className={getCardClass(`${styles.pricingCard} ${styles.popularCard}`, 'accelerator')} onClick={(e) => { scrollToSection(e, 'pricing-accelerator'); setExpandedId(expandedId === 'accelerator' ? null : 'accelerator'); }}>
             <div className={styles.badgeContainer}>
               <span className="badge badge-gold">MOST POPULAR</span>
             </div>
@@ -93,7 +100,7 @@ export default function Products() {
           </div>
 
           {/* Career Launch Pack */}
-          <div id="pricing-launch" className={`${styles.pricingCard} ${styles.premiumCard}`} onClick={(e) => scrollToSection(e, 'pricing-launch')}>
+          <div id="pricing-launch" className={getCardClass(`${styles.pricingCard} ${styles.premiumCard}`, 'launch')} onClick={(e) => { scrollToSection(e, 'pricing-launch'); setExpandedId(expandedId === 'launch' ? null : 'launch'); }}>
             <div className={styles.badgeContainer}>
               <span className="badge badge-purple">COMPLETE SYSTEM</span>
             </div>
