@@ -122,16 +122,16 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
                   : "";
 
                 await resend.emails.send({
-                  from: 'CareerVantaa <noreply@careervantaa.com>',
+                  from: 'Career Vantaa <noreply@careervantaa.com>',
                   to: customerEmail,
                   subject: `Your Download Link: ${productName}`,
-                  text: `Thank you for your purchase!\n\nOrder ID: ${razorpay_order_id}\nProduct: ${productName}\n\nYou can download your files using the secure link below:\n\n${downloadUrl}\n\nThis is a single-use link. If you have any issues, contact us at support@careervantaa.com.${upsellText}\n\nThanks,\nCareerVantaa Team`,
+                  text: `Thank you for your purchase!\n\nOrder ID: ${razorpay_order_id}\nProduct: ${productName}\n\nYou can download your files using the secure link below:\n\n${downloadUrl}\n\nThis is a single-use link. If you have any issues, contact us at support@careervantaa.com.${upsellText}\n\nThanks,\nCareer Vantaa Team`,
                   html: `
                     <div style="font-family: Arial, Helvetica, sans-serif; color: #334155; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                       <div style="background-color: #3b82f6; background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 24px 0;"></div>
                       <div style="padding: 30px 20px;">
                         <div style="text-align: center; margin-bottom: 25px;">
-                          <img src="https://careervantaa.com/logo.jpg" width="160" alt="CareerVantaa" style="display: block; margin: 0 auto;">
+                          <img src="https://careervantaa.com/logo.jpg" width="160" alt="Career Vantaa" style="display: block; margin: 0 auto;">
                         </div>
                         
                         <p style="font-size: 16px; margin-bottom: 20px;">Thank you for your purchase!</p>
@@ -151,7 +151,7 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
                       
                       ${upsellHtml}
                       
-                      <p style="margin-top: 30px; line-height: 1.5; color: #64748b;">Thanks,<br><strong style="color: #334155;">CareerVantaa Team</strong></p>
+                      <p style="margin-top: 30px; line-height: 1.5; color: #64748b;">Thanks,<br><strong style="color: #334155;">Career Vantaa Team</strong></p>
                       </div>
                     </div>
                   `
