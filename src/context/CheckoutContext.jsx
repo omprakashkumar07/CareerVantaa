@@ -25,7 +25,8 @@ const loadRazorpay = () => {
 export function CheckoutProvider({ children }) {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingProductId, setLoadingProductId] = useState(null);
+  const [loadingText, setLoadingText] = useState("");
 
   const showToast = (msg) => {
     setToastMsg(msg);
@@ -43,13 +44,21 @@ export function CheckoutProvider({ children }) {
       trackBeginCheckout(product);
     }
 
-    setIsLoading(true);
+    setLoadingProductId(productId);
+    setLoadingText("Preparing checkout...");
+    const messages = ["Preparing checkout...", "Almost there...", "Opening payment..."];
+    let msgIndex = 0;
+    const intervalId = setInterval(() => {
+      msgIndex = (msgIndex + 1) % messages.length;
+      setLoadingText(messages[msgIndex]);
+    }, 1200);
     
     try {
       const res = await loadRazorpay();
       if (!res) {
         showToast("Razorpay SDK failed to load. Are you online?");
-        setIsLoading(false);
+        clearInterval(intervalId);
+        setLoadingProductId(null);
         return;
       }
 
@@ -63,7 +72,8 @@ export function CheckoutProvider({ children }) {
 
       if (!dataRes.ok) {
         showToast(data.error || "Failed to create order");
-        setIsLoading(false);
+        clearInterval(intervalId);
+        setLoadingProductId(null);
         return;
       }
 
@@ -105,18 +115,14 @@ export function CheckoutProvider({ children }) {
       console.error(err);
       showToast("Something went wrong. Please try again.");
     } finally {
-      setIsLoading(false);
+      clearInterval(intervalId);
+      setLoadingProductId(null);
     }
   };
 
   return (
-    <CheckoutContext.Provider value={{ handleCheckoutClick }}>
+    <CheckoutContext.Provider value={{ handleCheckoutClick, loadingProductId, loadingText }}>
       {children}
-      {isLoading && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Loader2 className="animate-spin" size={48} color="white" />
-        </div>
-      )}
       {toastVisible && (
         <div className={`${styles.toast} animate-fade-in`}>
           <div className={styles.toastContent}>

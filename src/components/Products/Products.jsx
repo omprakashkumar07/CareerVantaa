@@ -1,4 +1,4 @@
-import { Check, ArrowRight } from 'lucide-react';
+import { Check, ArrowRight, Loader2 } from 'lucide-react';
 import { PAYMENT_LINKS } from '../../config';
 import { useCheckout } from '../../context/CheckoutContext';
 import { scrollToSection } from '../../utils/scroll';
@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import styles from './Products.module.css';
 
 export default function Products() {
-  const { handleCheckoutClick } = useCheckout();
+  const { handleCheckoutClick, loadingProductId, loadingText } = useCheckout();
   const [expandedId, setExpandedId] = useState(null);
 
   useEffect(() => {
@@ -53,11 +53,18 @@ export default function Products() {
             <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
               <a
                 href={PAYMENT_LINKS.starter || "#"}
-                onClick={(e) => handleCheckoutClick(e, PAYMENT_LINKS.starter)}
-                className="btn btn-secondary"
-                style={{ width: '100%', justifyContent: 'center' }}
+                onClick={(e) => {
+                  if (loadingProductId === PAYMENT_LINKS.starter) { e.preventDefault(); return; }
+                  handleCheckoutClick(e, PAYMENT_LINKS.starter);
+                }}
+                className={`btn btn-secondary ${loadingProductId === PAYMENT_LINKS.starter ? 'disabled' : ''}`}
+                style={{ width: '100%', justifyContent: 'center', pointerEvents: loadingProductId === PAYMENT_LINKS.starter ? 'none' : 'auto' }}
               >
-                Start With the Foundation — ₹99 <ArrowRight className="btnArrow" size={18} />
+                {loadingProductId === PAYMENT_LINKS.starter ? (
+                  <><Loader2 className="animate-spin" size={18} style={{marginRight: '8px'}} /> {loadingText}</>
+                ) : (
+                  <>Start With the Foundation — ₹99 <ArrowRight className="btnArrow" size={18} /></>
+                )}
               </a>
               <span className={styles.smallText}>Start with the essentials</span>
             </div>
@@ -88,11 +95,18 @@ export default function Products() {
               <div className={styles.smallText} style={{ marginBottom: '0.5rem', color: '#fcd34d', fontWeight: '600', letterSpacing: '0.05em' }}>RECOMMENDED FOR ACTIVE JOB SEEKERS</div>
               <a
                 href={PAYMENT_LINKS.accelerator || "#"}
-                onClick={(e) => handleCheckoutClick(e, PAYMENT_LINKS.accelerator)}
-                className="btn btn-primary"
-                style={{ width: '100%', justifyContent: 'center', minHeight: '56px', fontSize: '1.1rem' }}
+                onClick={(e) => {
+                  if (loadingProductId === PAYMENT_LINKS.accelerator) { e.preventDefault(); return; }
+                  handleCheckoutClick(e, PAYMENT_LINKS.accelerator);
+                }}
+                className={`btn btn-primary ${loadingProductId === PAYMENT_LINKS.accelerator ? 'disabled' : ''}`}
+                style={{ width: '100%', justifyContent: 'center', minHeight: '56px', fontSize: '1.1rem', pointerEvents: loadingProductId === PAYMENT_LINKS.accelerator ? 'none' : 'auto' }}
               >
-                Build My Job Search System — ₹299 <ArrowRight className="btnArrow" size={20} />
+                {loadingProductId === PAYMENT_LINKS.accelerator ? (
+                  <><Loader2 className="animate-spin" size={20} style={{marginRight: '8px'}} /> {loadingText}</>
+                ) : (
+                  <>Build My Job Search System — ₹299 <ArrowRight className="btnArrow" size={20} /></>
+                )}
               </a>
               <span className={styles.smallText} style={{ marginTop: '0.5rem' }}>Everything in Starter + the complete application & job-hunt workflow.</span>
               <span className={styles.smallText} style={{ marginTop: '0.25rem', opacity: '0.7' }}>Practical systems</span>
@@ -122,11 +136,18 @@ export default function Products() {
             <div className={styles.btnContainer} onClick={(e) => e.stopPropagation()}>
               <a
                 href={PAYMENT_LINKS.launch || "#"}
-                onClick={(e) => handleCheckoutClick(e, PAYMENT_LINKS.launch)}
-                className="btn btn-primary"
-                style={{ width: '100%', justifyContent: 'center', background: '#3b0764', borderColor: '#581c87' }}
+                onClick={(e) => {
+                  if (loadingProductId === PAYMENT_LINKS.launch) { e.preventDefault(); return; }
+                  handleCheckoutClick(e, PAYMENT_LINKS.launch);
+                }}
+                className={`btn btn-primary ${loadingProductId === PAYMENT_LINKS.launch ? 'disabled' : ''}`}
+                style={{ width: '100%', justifyContent: 'center', background: '#3b0764', borderColor: '#581c87', pointerEvents: loadingProductId === PAYMENT_LINKS.launch ? 'none' : 'auto' }}
               >
-                Launch My Career System — ₹499 <ArrowRight className="btnArrow" size={18} />
+                {loadingProductId === PAYMENT_LINKS.launch ? (
+                  <><Loader2 className="animate-spin" size={18} style={{marginRight: '8px'}} /> {loadingText}</>
+                ) : (
+                  <>Launch My Career System — ₹499 <ArrowRight className="btnArrow" size={18} /></>
+                )}
               </a>
             </div>
           </div>
