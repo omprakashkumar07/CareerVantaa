@@ -111,6 +111,12 @@ paymentsRouter.post('/verify-payment', async (req, res) => {
       return res.status(403).json({ error: 'Unable to verify session' });
     }
 
+    if (order.status === 'claimed') {
+      return res.json({
+        claimStatus: 'already_claimed'
+      });
+    }
+
     if (order.status === 'paid') {
       // Idempotency: Already processed
       return res.json({

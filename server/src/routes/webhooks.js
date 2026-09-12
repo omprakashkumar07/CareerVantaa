@@ -71,7 +71,7 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
       if (razorpay_order_id) {
         const { data: orderToUpdate } = await supabase
           .from('orders')
-          .select('id, product_id, status')
+          .select('id, product_id, status, access_token')
           .eq('razorpay_order_id', razorpay_order_id)
           .single();
 
@@ -106,12 +106,9 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
             const filePath = PRODUCT_FILES[productId];
 
             if (customerEmail && filePath) {
-              const { data: signedData, error: urlError } = await supabase
-                .storage
-                .from('careervantaa-products')
-                .createSignedUrl(filePath, 7 * 24 * 60 * 60); // 7 days expiry
-
-              if (!urlError && signedData?.signedUrl) {
+              const downloadUrl = `${config.backendUrl}/api/download/email/${orderToUpdate.access_token}`;
+              
+              if (downloadUrl) {
                 const productName = productConfig?.name || productId;
                 
                 const upsellText = productId === 'starter' 
@@ -128,7 +125,7 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
                   from: 'CareerVantaa <noreply@careervantaa.com>',
                   to: customerEmail,
                   subject: `Your Download Link: ${productName}`,
-                  text: `Thank you for your purchase!\n\nOrder ID: ${razorpay_order_id}\nProduct: ${productName}\n\nYou can download your files using the link below (valid for 7 days):\n\n${signedData.signedUrl}\n\nIf you have any issues, contact us at support@careervantaa.com.${upsellText}\n\nThanks,\nCareerVantaa Team`,
+                  text: `Thank you for your purchase!\n\nOrder ID: ${razorpay_order_id}\nProduct: ${productName}\n\nYou can download your files using the secure link below:\n\n${downloadUrl}\n\nThis is a single-use link. If you have any issues, contact us at support@careervantaa.com.${upsellText}\n\nThanks,\nCareerVantaa Team`,
                   html: `
                     <div style="font-family: Arial, Helvetica, sans-serif; color: #334155; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                       <div style="background-color: #3b82f6; background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 24px 0;"></div>
@@ -144,10 +141,10 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
                         <p style="margin: 0;"><strong>Product:</strong> ${productName}</p>
                       </div>
                       
-                      <p style="margin-bottom: 25px;">You can download your files using the secure link below (valid for 7 days):</p>
+                      <p style="margin-bottom: 25px;">You can download your files using the secure, one-time link below:</p>
                       
                       <div style="text-align: center; margin-bottom: 30px;">
-                        <a href="${signedData.signedUrl}" style="background-color: #3b82f6; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; font-size: 16px;">Download Your Files</a>
+                        <a href="${downloadUrl}" style="background-color: #3b82f6; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; font-size: 16px;">Download Your Files</a>
                       </div>
                       
                       <p style="margin-bottom: 25px; line-height: 1.5;">If you have any issues, contact us at <a href="mailto:support@careervantaa.com" style="color: #3b82f6; text-decoration: none;">support@careervantaa.com</a>.</p>
@@ -159,8 +156,6 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
                     </div>
                   `
                 });
-              } else {
-                console.error(`Email Fallback: Failed to generate signed URL for order ${razorpay_order_id}`, urlError);
               }
             } else {
               console.error(`Email Fallback: Missing email or filePath for order ${razorpay_order_id}`);

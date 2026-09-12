@@ -50,6 +50,11 @@ export default function Success() {
         
         const data = await res.json();
         
+        if (res.ok && data.claimStatus === 'already_claimed') {
+          setStatus('already_claimed');
+          return;
+        }
+        
         if (res.ok && data.verified) {
           setAccessToken(data.accessToken);
           setOrderData({
@@ -158,6 +163,21 @@ export default function Success() {
               <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Unable to Verify Session</h1>
               <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
                 For security, this download page can only be accessed from the original browser tab where the purchase was made. Please check your email for a permanent, secure download link.
+              </p>
+              <button onClick={() => navigate('/')} className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                Return to Homepage
+              </button>
+            </div>
+          )}
+
+          {status === 'already_claimed' && (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', marginBottom: '2rem' }}>
+                <CheckCircle2 size={32} />
+              </div>
+              <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Already Downloaded</h1>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
+                Your files have already been successfully downloaded. If you need to access them again, please contact our support team at <strong>support@careervantaa.com</strong> and we'll be happy to help.
               </p>
               <button onClick={() => navigate('/')} className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
                 Return to Homepage
