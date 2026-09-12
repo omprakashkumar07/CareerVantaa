@@ -106,7 +106,11 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
             const filePath = PRODUCT_FILES[productId];
 
             if (customerEmail && filePath) {
-              const downloadUrl = `${config.backendUrl}/api/download/email/${orderToUpdate.access_token}`;
+              const host = req.get('x-forwarded-host') || req.get('host');
+              const protocol = req.get('x-forwarded-proto') || req.protocol;
+              const dynamicBackendUrl = process.env.BACKEND_URL || `${protocol}://${host}`;
+              
+              const downloadUrl = `${dynamicBackendUrl}/api/download/email/${orderToUpdate.access_token}`;
               
               if (downloadUrl) {
                 const productName = productConfig?.name || productId;
