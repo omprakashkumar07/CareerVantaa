@@ -117,7 +117,7 @@ webhooksRouter.post('/razorpay', express.raw({ type: 'application/json' }), asyn
                   from: 'CareerVantaa <noreply@careervantaa.com>',
                   to: customerEmail,
                   subject: `Your Download Link: ${productName}`,
-                  text: `Thank you for your purchase!\n\nOrder ID: ${razorpay_order_id}\nProduct: ${productName}\n\nYou can download your files using the link below (valid for 7 days):\n\n${signedData.signedUrl}\n\nIf you have any issues, please reply to this email or contact support.\n\nThanks,\nCareerVantaa Team`
+                  text: `Thank you for your purchase!\n\nOrder ID: ${razorpay_order_id}\nProduct: ${productName}\n\nYou can download your files using the link below (valid for 7 days):\n\n${signedData.signedUrl}\n\nIf you have any issues, contact us at support@careervantaa.com.\n\nThanks,\nCareerVantaa Team`
                 });
               } else {
                 console.error(`Email Fallback: Failed to generate signed URL for order ${razorpay_order_id}`, urlError);
