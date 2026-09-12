@@ -76,6 +76,11 @@ export function CheckoutProvider({ children }) {
         setLoadingProductId(null);
         return;
       }
+      
+      // Store the nonce in sessionStorage securely keyed to this exact order
+      if (data.nonce) {
+        sessionStorage.setItem(`checkout_nonce_${data.orderId}`, data.nonce);
+      }
 
       const options = {
         key: data.keyId,

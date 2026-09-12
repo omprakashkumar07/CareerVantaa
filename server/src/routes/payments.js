@@ -67,6 +67,7 @@ paymentsRouter.post('/create-order', async (req, res) => {
       amount: rzpOrder.amount,
       currency: rzpOrder.currency,
       keyId: config.razorpay.keyId,
+      nonce: order.access_token, // Pass backend-generated token to client as nonce
     });
   } catch (err) {
     console.error("Create order error:", err);
@@ -77,7 +78,7 @@ paymentsRouter.post('/create-order', async (req, res) => {
 // POST /api/verify-payment
 paymentsRouter.post('/verify-payment', async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, nonce } = req.body;
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
       return res.status(400).json({ error: 'Missing payment parameters' });
@@ -103,6 +104,11 @@ paymentsRouter.post('/verify-payment', async (req, res) => {
 
     if (orderError || !order) {
       return res.status(404).json({ error: 'Order not found' });
+    }
+
+    // Security Handshake: ensure the caller is the original browser session
+    if (order.access_token !== nonce) {
+      return res.status(403).json({ error: 'Unable to verify session' });
     }
 
     if (order.status === 'paid') {

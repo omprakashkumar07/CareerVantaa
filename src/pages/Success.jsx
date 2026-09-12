@@ -35,13 +35,16 @@ export default function Success() {
     let timeoutId;
     const verifyPayment = async () => {
       try {
+        const nonce = sessionStorage.getItem(`checkout_nonce_${orderId}`);
+        
         const res = await fetch(`${BACKEND_URL}/payments/verify-payment`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             razorpay_payment_id: paymentId,
             razorpay_order_id: orderId,
-            razorpay_signature: signature
+            razorpay_signature: signature,
+            nonce: nonce
           })
         });
         
@@ -66,6 +69,11 @@ export default function Success() {
           }
 
           setStatus('verified');
+          return;
+        }
+
+        if (res.status === 403) {
+          setStatus('unauthorized');
           return;
         }
 
@@ -135,6 +143,21 @@ export default function Success() {
               <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>No Payment Data</h1>
               <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
                 We couldn't find your payment details. Make sure you use the link provided after checkout.
+              </p>
+              <button onClick={() => navigate('/')} className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
+                Return to Homepage
+              </button>
+            </div>
+          )}
+
+          {status === 'unauthorized' && (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', marginBottom: '2rem' }}>
+                <AlertCircle size={32} />
+              </div>
+              <h1 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Unable to Verify Session</h1>
+              <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
+                For security, this download page can only be accessed from the original browser tab where the purchase was made. Please check your email for a permanent, secure download link.
               </p>
               <button onClick={() => navigate('/')} className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
                 Return to Homepage
