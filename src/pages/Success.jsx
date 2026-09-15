@@ -64,13 +64,24 @@ export default function Success() {
           });
           if (!purchaseTracked.current) {
             purchaseTracked.current = true;
-            // Track purchase for each product in the order (usually 1)
-            data.entitlements.forEach(productId => {
-              const product = PRODUCTS[productId];
-              if (product) {
-                trackPurchase(orderId, product);
+            
+            // Robust Idempotency: Prevent duplicate firing on refresh/revisit
+            const idempotencyKey = `pixel_tracked_${orderId}`;
+            if (!localStorage.getItem(idempotencyKey)) {
+              const purchasedProducts = data.entitlements
+                .map(id => PRODUCTS[id])
+                .filter(Boolean);
+
+              const amountInRupees = data.amount / 100;
+                
+              try {
+                trackPurchase(orderId, amountInRupees, 'INR', purchasedProducts);
+                // Record idempotency ONLY after execution to prevent permanent tracking loss
+                localStorage.setItem(idempotencyKey, 'true');
+              } catch (err) {
+                console.error('Purchase tracking failed', err);
               }
-            });
+            }
           }
 
           setStatus('verified');

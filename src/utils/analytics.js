@@ -96,23 +96,28 @@ export const trackBeginCheckout = (product) => {
   }
 };
 
-export const trackPurchase = (orderId, product) => {
+export const trackPurchase = (orderId, amount, currency = 'INR', products = []) => {
   if (GA_MEASUREMENT_ID && window.gtag) {
     window.gtag('event', 'purchase', {
       transaction_id: orderId,
-      product_id: product.id,
-      product_name: product.name,
-      value: product.price,
-      currency: product.currency
+      value: amount,
+      currency: currency,
+      items: products.map(p => ({
+        item_id: p.id,
+        item_name: p.name,
+        price: p.price,
+        currency: p.currency
+      }))
     });
   }
   if (META_PIXEL_ID && window.fbq) {
     window.fbq('track', 'Purchase', {
-      content_ids: [product.id],
-      content_name: product.name,
+      value: amount,
+      currency: currency,
+      content_ids: products.map(p => p.id),
+      content_name: products.map(p => p.name).join(', '),
       content_type: 'product',
-      value: product.price,
-      currency: product.currency
-    });
+      order_id: orderId
+    }, { eventID: orderId });
   }
 };
